@@ -6,7 +6,7 @@ var a: int = 0
 var b: String = "hello"
 
 func _ready():
-	# DsInspector.add_cheat_button_callable(I18nManager.tr("DEMO_TEST_BUTTON"), on_test_button_click)
+	# DsInspector.add_cheat_button_callable(I18nManager.translate("DEMO_TEST_BUTTON"), on_test_button_click)
 	pass
 
 func _process(_delta: float) -> void:

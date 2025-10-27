@@ -95,7 +95,7 @@ func select_btn_click():
 
 # 删除按钮点击，弹出确认框
 func _on_delete_btn_pressed():
-	confirmation.dialog_text = "确定要删除选中的节点吗？"
+	confirmation.dialog_text = I18nManager.translate("DIALOG_DELETE_CONFIRMATION")
 	confirmation.popup_centered()
 
 # 确认框确认后执行删除
@@ -124,7 +124,7 @@ func refresh_icon():
 
 func next_frame_btn_click():
 	if !get_tree().paused:
-		print("当前未暂停，无法单步")
+		print(I18nManager.translate("ERROR_STEP_NOT_PAUSED"))
 		return
 	get_tree().paused = false
 	_next_frame_paused_index = 2
@@ -167,7 +167,7 @@ func save_node_as_scene(node: Node, path: String) -> void:
 	var scene := PackedScene.new()
 	var result := scene.pack(node)
 	if result != OK:
-		print("打包失败，错误码：", result)
+		print(I18nManager.translate("SUCCESS_SAVE"), path)
 		node.owner = o
 		return
 	
@@ -175,7 +175,7 @@ func save_node_as_scene(node: Node, path: String) -> void:
 	if err == OK:
 		print("保存成功: ", path)
 	else:
-		print("保存失败，错误码：", err)
+		print(I18nManager.translate("ERROR_SAVE_FAILED"), err)
 	
 	node.owner = o
 

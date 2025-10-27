@@ -102,8 +102,12 @@ func get_text(key: String, language: String = "") -> String:
 	return key
 
 # Static convenience function for global access
-static func tr(key: String, language: String = "") -> String:
+static func translate(key: String, language: String = "") -> String:
 	return I18nManager.get_instance().get_text(key, language)
+
+# Short alias for convenience
+static func t(key: String, language: String = "") -> String:
+	return translate(key, language)
 
 # Get current language from plugin
 static func get_current_language() -> String:

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dbsc835mo7c0q"
+
+[deps]
+
+files=["res://addons/ds_inspector/i18n/cn.cn.translation"]
+
+source_file="res://addons/ds_inspector/i18n/cn.csv"
+dest_files=["res://addons/ds_inspector/i18n/cn.cn.translation"]
+
+[params]
+
+compress=true
+delimiter=0

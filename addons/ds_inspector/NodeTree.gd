@@ -432,7 +432,7 @@ func locate_selected(select_node: Node):
 		return
 	var node_data: NodeData = curr_item.get_metadata(0)
 	if !node_data:
-		print(I18nManager.tr("ERROR_SELECTION_METADATA_NULL"))
+		print(I18nManager.translate("ERROR_SELECTION_METADATA_NULL"))
 	
 	_next_frame_index = 1
 	_next_frame_select = curr_item;
