@@ -90,9 +90,9 @@ func _process(delta: float) -> void:
 						return
 					elif _selected_list.size() > 1: # and _tips_finish_count < 5: # 最多提示 5 次
 						if p == "macOS":
-							tips.text = "错过了选中的节点？\n按住Command在点击鼠标左键可以回溯选择的节点！"
+							tips.text = I18nManager.tr("HINT_NODE_SELECTION_MAC")
 						else:
-							tips.text = "错过了选中的节点？\n按住Ctrl在点击鼠标左键可以回溯选择的节点！"
+							tips.text = I18nManager.tr("HINT_NODE_SELECTION_PC")
 						tips_anim.play("show")
 						
 		else:

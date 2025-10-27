@@ -5,16 +5,25 @@ var debug_tool: Node
 var tool_menu: PopupMenu
 var save_config: SaveConfig
 
+# Language selection - can be referenced by other scripts
+# Available languages: "cn", "en"
+static var current_language: String = "cn"
+
 func _enter_tree():
 	# 创建工具菜单
 	tool_menu = PopupMenu.new()
-	tool_menu.add_check_item("在编辑器运行", 0)
-	tool_menu.add_check_item("在游戏中运行", 1)
+	tool_menu.add_check_item(I18nManager.tr("MENU_RUN_IN_EDITOR"), 0)
+	tool_menu.add_check_item(I18nManager.tr("MENU_RUN_IN_GAME"), 1)
+	tool_menu.add_separator()
+	tool_menu.add_submenu_item("Language", _create_language_menu())
 	
 	SaveConfig.save_path = "user://ds_inspector_editor_config.json"
 	# 设置初始状态
 	save_config = SaveConfig.new()
 	add_child(save_config)
+
+	# Load saved language or use default
+	current_language = save_config.get_language()
 
 	tool_menu.set_item_checked(0, save_config.get_enable_in_editor())
 	tool_menu.set_item_checked(1, save_config.get_enable_in_game())
@@ -35,6 +44,34 @@ func _exit_tree():
 	if debug_tool != null:
 		debug_tool.free()
 		debug_tool = null
+
+func _create_language_menu() -> PopupMenu:
+	var lang_menu = PopupMenu.new()
+	lang_menu.add_radio_check_item("中文 (Chinese)", 0)
+	lang_menu.add_radio_check_item("English", 1)
+	
+	# Set initial language selection
+	if current_language == "cn":
+		lang_menu.set_item_checked(0, true)
+	else:
+		lang_menu.set_item_checked(1, true)
+	
+	lang_menu.connect("id_pressed", Callable(self, "_on_language_menu_pressed"))
+	return lang_menu
+
+func _on_language_menu_pressed(id: int):
+	var lang_menu = tool_menu.get_popup()
+	if id == 0:  # Chinese
+		current_language = "cn"
+		lang_menu.set_item_checked(0, true)
+		lang_menu.set_item_checked(1, false)
+	elif id == 1:  # English
+		current_language = "en"
+		lang_menu.set_item_checked(0, false)
+		lang_menu.set_item_checked(1, true)
+	
+	# Save language preference
+	save_config.set_language(current_language)
 
 func _on_tool_menu_pressed(id: int):
 	if id == 0: # 启用编辑器运行

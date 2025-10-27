@@ -89,7 +89,7 @@ func save_config() -> void:
 		# print("save:", serialized_data)
 		# print("配置已保存到 ", save_path)
 	else:
-		print("无法保存配置文件到 ", save_path)
+		print(I18nManager.tr("ERROR_CONFIG_SAVE_FAILED"), save_path)
 
 # 加载配置文件
 func _load_config() -> void:
@@ -105,15 +105,15 @@ func _load_config() -> void:
 				if result is Dictionary:
 					_config_data = _deserialize_value(result)
 				else:
-					print("配置文件格式错误，使用默认配置")
+					print(I18nManager.tr("ERROR_CONFIG_FORMAT"))
 					_config_data = ConfigData.new()
 					save_config()
 			else:
-				print("JSON 解析错误: ", json.get_error_message())
+				print(I18nManager.tr("ERROR_JSON_PARSE"), json.get_error_message())
 				_config_data = ConfigData.new()
 				save_config()
 		else:
-			print("无法打开配置文件 ", save_path)
+			print(I18nManager.tr("ERROR_CONFIG_OPEN_FAILED"), save_path)
 			_config_data = ConfigData.new()
 			save_config()
 	else:
@@ -227,5 +227,17 @@ func set_auto_search(enabled: bool) -> void:
 	_needs_save = true
 
 # 获取场景树自动搜索
+# 获取场景树自动搜索
 func get_auto_search() -> bool:
-	return _config_data.auto_search
+	return config_data.get("auto_search", true)
+
+# ==================== 语言相关 ====================
+
+# 设置语言
+func set_language(language: String):
+	config_data["language"] = language
+	_schedule_save()
+
+# 获取语言
+func get_language() -> String:
+	return config_data.get("language", "cn")
